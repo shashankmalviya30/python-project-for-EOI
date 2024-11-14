@@ -1,0 +1,39 @@
+/* styles.css */
+
+body {
+    background-image: url('coal.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #fff;
+}
+
+.container {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    background-color: #FF5733;
+    border-color: #FF5733;
+}
+
+.btn-primary:hover {
+    background-color: #FF5733;
+    border-color: #FF5733;
+    opacity: 0.8;
+}
+
+#response {
+    font-size: 18px;
+    margin-top: 20px;
+}
