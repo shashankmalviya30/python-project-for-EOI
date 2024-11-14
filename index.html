@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coal Mining Chatbot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .user-message-container {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        .user-message {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 10px;
+            padding: 10px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+        .bot-message-container {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+        .bot-message {
+            background-color: #2196F3;
+            color: white;
+            border-radius: 10px;
+            padding: 10px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+        .chat-input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .chat-button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        .chat-button:hover {
+            background-color: #45a049;
+        }
+        .tagline {
+            font-style: italic;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Explore Coal Mining Regulations</h1>
+        <p class="tagline">Get answers about laws, regulations, and practices</p>
+        <!-- Chat container and input field -->
+        <div class="chat-container" id="chat-container"></div>
+        <input type="text" id="question" class="chat-input" placeholder="Type your question...">
+        <button class="chat-button" onclick="askQuestion()">Ask</button>
+        <!-- Logout button -->
+        <form action="{{ url_for('logout') }}" method="post">
+            <button type="submit" class="btn btn-danger mt-3">Logout</button>
+        </form>
+    </div>
+
+    <script>
+        function askQuestion() {
+            var question = document.getElementById('question').value;
+            var chatContainer = document.getElementById('chat-container');
+            
+            // User message container
+            var userMessageContainer = document.createElement('div');
+            userMessageContainer.classList.add('user-message-container');
+            var userMessage = '<div class="user-message">' + question + '</div>';
+            userMessageContainer.innerHTML = userMessage;
+            chatContainer.appendChild(userMessageContainer);
+
+            // Bot response container
+            fetch('/ask', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({question: question})
+            })
+            .then(response => response.json())
+            .then(data => {
+                var botMessageContainer = document.createElement('div');
+                botMessageContainer.classList.add('bot-message-container');
+                var botMessage = '<div class="bot-message">' + data.response + '</div>';
+                botMessageContainer.innerHTML = botMessage;
+                chatContainer.appendChild(botMessageContainer);
+            });
+        }
+    </script>
+</body>
+</html>
